@@ -1,6 +1,5 @@
 import subprocess
 
-#subprocess.run(["ls", "-aF"])
 import subprocess
 
 subprocess.run([
