@@ -4,6 +4,11 @@
             "path": "sagittal_average_repo",
             "envManager": "ms-python.python:venv",
             "packageManager": "ms-python.python:pip"
+        },
+        {
+            "path": "sagittal_average_repo/src/sagittal_brain.py",
+            "envManager": "ms-python.python:venv",
+            "packageManager": "ms-python.python:pip"
         }
     ]
 }
