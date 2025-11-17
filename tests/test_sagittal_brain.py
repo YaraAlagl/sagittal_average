@@ -3,13 +3,13 @@ import sys
 import os
 
 # Correct import path based on your folder structure
-from sagittal_repo.sagittal_brain import run_averages
+from src.sagittal_average.sagittal_brain import run_averages
 
 # --- Step 1 recap: define the test input and expected output ---
 
 # File paths inside sagittal_repo
-INPUT_FILE = "sagittal_repo/brain_sample.csv"
-OUTPUT_FILE = "sagittal_repo/brain_average.csv"
+INPUT_FILE = "src/sagittal_average/brain_sample.csv"
+OUTPUT_FILE = "src/sagittal_average/brain_average.csv"
 
 data_input = np.zeros((20, 20))
 data_input[-1, :] = 1  # simple pattern to make differences visible
