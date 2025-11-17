@@ -1,36 +1,42 @@
-import numpy as np
+# test_sagittal_brain.py
 import sys
-from sagittal_brain import run_averages  # adjust to match Charlene’s module
+from pathlib import Path
+import numpy as np
 
-# --- Step 1 recap: define the test input and expected output ---
+# --- Add src folder to Python path for editable installs ---
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent.parent / "src"))
+
+# --- Import your module ---
+from sagittal_brain import run_averages
+
+# --- Paths ---
+test_dir = Path(__file__).parent
+input_file = test_dir / "brain_sample.csv"
+output_file = test_dir / "brain_average.csv"
+
+# --- Step 1: create test input ---
 data_input = np.zeros((20, 20))
 data_input[-1, :] = 1  # simple pattern to make differences visible
 
-# Save input for Charlene's code
-np.savetxt("brain_sample.csv", data_input, fmt='%d', delimiter=',')
+# Save input CSV in test directory
+np.savetxt(input_file, data_input, fmt='%d', delimiter=',')
 
-
-# Run Charlene’s code (it should read brain_sample.csv and write brain_average.csv)
+# --- Step 2: run the function ---
 try:
-    run_averages("brain_sample.csv", "brain_average.csv")
+    run_averages(input_file, output_file)
 except Exception as e:
-    print(f"Error while running Charlene’s code: {e}")
-    sys.exit(1)
+    raise RuntimeError(f"Error while running run_averages: {e}")
 
-# --- Step 2: Read back Charlene's output ---
-result = np.loadtxt("src"/"sagittal_brain"/"brain_average.csv",  delimiter=',')
+# --- Step 3: read the output ---
+assert output_file.exists(), f"Output file not found: {output_file}"
+result = np.loadtxt(output_file, delimiter=',')
 
-# --- Define expected result ---
-# (You should adjust this based on what the sagittal average is supposed to do)
+# --- Step 4: define expected result ---
 expected_output = np.zeros((20, 20))
-expected_output[-1, :] = 1
+expected_output[-1, :] = 1  # adjust to match expected sagittal average
 
-# --- Compare and exit with success/failure ---
-if np.allclose(result), expected_output):
-    print("✅ Test passed: output matches expected.")
-    sys.exit(0)
-else:
-    print("❌ Test failed: output does not match expected.")
-    print("Output:\n", result)
-    print("Expected:\n", expected_output)
-    sys.exit(1)
+# --- Step 5: check if the result matches ---
+def test_sagittal_average():
+    assert np.allclose(result, expected_output), (
+        f"Output does not match expected.\nOutput:\n{result}\nExpected:\n{expected_output}"
+    )
